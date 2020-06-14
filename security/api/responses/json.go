@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"reflect"
 
-	"github.com/deivisson/apstore/api/models"
+	"github.com/deivisson/micro-sample/security/api/models"
 )
 
 // Success response to client
@@ -60,8 +60,6 @@ func getErrorFromModels(data interface{}) models.Errors {
 	switch data.(type) {
 	case models.User:
 		return data.(models.User).Errors
-	case models.Store:
-		return data.(models.Store).Errors
 	default:
 		return models.Errors{}
 	}

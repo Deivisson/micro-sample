@@ -3,8 +3,8 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/deivisson/apstore/api/models"
-	"github.com/deivisson/apstore/api/responses"
+	"github.com/deivisson/micro-sample/security/api/models"
+	"github.com/deivisson/micro-sample/security/api/responses"
 )
 
 func (server *Server) getAll(w http.ResponseWriter, r *http.Request) {
@@ -20,7 +20,7 @@ func (server *Server) getAll(w http.ResponseWriter, r *http.Request) {
 
 func (server *Server) getUserID(w http.ResponseWriter, r *http.Request) {
 	user := models.User{}
-	id, err := GetHttpParamsAsInt64(w, r, "id")
+	id, err := GetHTTPParamsAsInt64(w, r, "id")
 	if err != nil {
 		return
 	}
@@ -71,23 +71,23 @@ func (server *Server) getUserID(w http.ResponseWriter, r *http.Request) {
 // 	responses.Success(w, http.StatusOK, updatedUser)
 // }
 
-func (server *Server) deleteUser(w http.ResponseWriter, r *http.Request) {
-	user := models.User{}
+// func (server *Server) deleteUser(w http.ResponseWriter, r *http.Request) {
+// 	user := models.User{}
 
-	id, err := GetHttpParamsAsInt64(w, r, "id")
-	if err != nil {
-		return
-	}
-	id, err = user.Delete(server.DB, id)
-	responses.Dispatch(w, user)
-}
+// 	id, err := GetHTTPParamsAsInt64(w, r, "id")
+// 	if err != nil {
+// 		return
+// 	}
+// 	id, err = user.Delete(server.DB, id)
+// 	responses.Dispatch(w, user)
+// }
 
-func (server *Server) uploadUserAvatar(w http.ResponseWriter, r *http.Request) {
-	user := models.User{}
-	avatar, err := user.UploadAvatar(server.DB, r)
-	if err != nil {
-		responses.Error(w, http.StatusBadRequest, err)
-	} else {
-		responses.Dispatch(w, avatar)
-	}
-}
+// func (server *Server) uploadUserAvatar(w http.ResponseWriter, r *http.Request) {
+// 	user := models.User{}
+// 	avatar, err := user.UploadAvatar(server.DB, r)
+// 	if err != nil {
+// 		responses.Error(w, http.StatusBadRequest, err)
+// 	} else {
+// 		responses.Dispatch(w, avatar)
+// 	}
+// }

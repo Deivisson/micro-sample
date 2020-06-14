@@ -3,11 +3,9 @@ package models
 import (
 	"encoding/json"
 	"html"
-	"net/http"
 	"strings"
 	"time"
 
-	// "github.com/deivisson/apstore/api/utils"
 	"github.com/jinzhu/gorm"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"golang.org/x/crypto/bcrypt"
@@ -122,7 +120,6 @@ func (u *User) Create(db *gorm.DB, params []byte) error {
 // 	}
 // 	return u, nil
 // }
-
 
 // ValidateSignIn validate credentials of user
 func (u *User) ValidateSignIn() interface{} {

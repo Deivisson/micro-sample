@@ -4,8 +4,8 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/deivisson/apstore/api/responses"
-	"github.com/deivisson/apstore/api/utils"
+	"github.com/deivisson/micro-sample/security/api/responses"
+	"github.com/deivisson/micro-sample/security/api/utils"
 )
 
 func SetMiddlewareJSON(next http.HandlerFunc) http.HandlerFunc {

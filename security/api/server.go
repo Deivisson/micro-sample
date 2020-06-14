@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/deivisson/apstore/api/controllers"
-	"github.com/deivisson/apstore/api/db/migrate"
+	"github.com/deivisson/micro-sample/security/api/controllers"
+	"github.com/deivisson/micro-sample/security/api/db/migrate"
 	"github.com/joho/godotenv"
 )
 
@@ -32,5 +32,5 @@ func Run() {
 		os.Getenv("DB_NAME"),
 	)
 	migrate.Load(server.DB)
-	server.Run(":8000")
+	server.Run(":6000")
 }

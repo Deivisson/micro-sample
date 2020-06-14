@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/deivisson/apstore/api/responses"
+	"github.com/deivisson/micro-sample/security/api/responses"
 	jwt "github.com/dgrijalva/jwt-go"
 )
 

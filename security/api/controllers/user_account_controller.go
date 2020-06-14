@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/deivisson/apstore/api/models"
-	"github.com/deivisson/apstore/api/responses"
-	"github.com/deivisson/apstore/api/utils"
+	"github.com/deivisson/micro-sample/security/api/models"
+	"github.com/deivisson/micro-sample/security/api/responses"
+	"github.com/deivisson/micro-sample/security/api/utils"
 	"golang.org/x/crypto/bcrypt"
 )
 
