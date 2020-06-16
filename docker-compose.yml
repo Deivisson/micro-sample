@@ -9,11 +9,35 @@ services:
       - "--providers.docker=true"                   # Enabling docker provider
       - "--providers.docker.exposedbydefault=false" # Do not expose containers unless explicitly told so
       - "--entrypoints.web.address=:80"             # Traefik will listen to incoming request on the port 80 (HTTP)
+      - "--tracing=true"
+      - "--tracing.serviceName=traefik"
+      - "--tracing.jaeger=true"
+      - "--tracing.jaeger.samplingServerURL=http://localhost:5778/sampling"
+      - "--tracing.jaeger.samplingType=const"
+      - "--tracing.jaeger.samplingParam=1.0"
+      - "--tracing.jaeger.localAgentHostPort=tracing:6831"
+      - "--tracing.jaeger.propagation=jaeger"
+      - "--tracing.jaeger.traceContextHeaderName=uber-trace-id"
     ports:
       - "80:80"
       - "8080:8080"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"  # So that Traefik can listen to the Docker events
+
+  tracing:
+    image: jaegertracing/all-in-one
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "9411:9411"
+    env_file:
+      - .env
+    security_opt:
+      - seccomp:unconfined
 
   security:
     image: go-docker-image
