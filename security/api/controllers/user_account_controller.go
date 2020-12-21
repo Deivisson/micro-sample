@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"errors"
+	"log"
 	"net/http"
 	"strings"
 
@@ -75,7 +76,7 @@ func verifyPassword(hashedPassword, password string) error {
 func (server *Server) emailAvailable(w http.ResponseWriter, r *http.Request) {
 	var err error
 	user := models.User{}
-
+	log.Println(">>>>>>>>>> emailAvailable")
 	email, err := getBodyParamByName(r, "email")
 	if err != nil {
 		responses.Error(w, http.StatusInternalServerError, err)

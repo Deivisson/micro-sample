@@ -1,10 +1,10 @@
-version: "3"
+version: "3.7"
 services:
   traefik:
     image: traefik:v2.2
     container_name: "traefik"
     command:
-      #- "--log.level=DEBUG"
+      # - "--log.level=DEBUG"
       - "--api.insecure=true"                       # Traefik will listen on port 8080 by default for API request
       - "--providers.docker=true"                   # Enabling docker provider
       - "--providers.docker.exposedbydefault=false" # Do not expose containers unless explicitly told so
@@ -39,6 +39,22 @@ services:
     security_opt:
       - seccomp:unconfined
 
+  auth:
+    image: go-docker-image
+    environment:
+      - DB_PORT=5432
+      - DB_HOST=docker.for.mac.host.internal
+    ports:
+      - '6001:6000'
+    volumes:
+      - ./auth/.:/app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.auth.rule=Host(`localhost`) && PathPrefix(`/auth`)"
+      - "traefik.http.routers.auth.middlewares=auth"
+      - "traefik.http.routers.auth.entrypoints=web"
+      - "traefik.http.middlewares.auth.stripprefix.prefixes=/auth"
+
   security:
     image: go-docker-image
     environment:
@@ -51,6 +67,9 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.security.rule=Host(`localhost`) && PathPrefix(`/security`)"
-      - "traefik.http.routers.security.middlewares=security-stripprefix"
-      - "traefik.http.middlewares.security-stripprefix.stripprefix.prefixes=/security"
+      - "traefik.http.routers.security.middlewares=security,security-auth"
       - "traefik.http.routers.security.entrypoints=web"
+      - "traefik.http.middlewares.security.stripprefix.prefixes=/security"
+      - "traefik.http.middlewares.security-auth.forwardauth.address=http://localhost/auth/verify"
+      - "traefik.http.middlewares.security-auth.forwardauth.trustForwardHeader=true"
+    
